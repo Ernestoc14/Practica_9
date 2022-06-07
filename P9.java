@@ -1,10 +1,14 @@
 import java.util.Scanner;
 public class P9 {
     private String [] Carrera = new String [5];
+    private int matriculados;
     private int [] Matricula = new int [5];
     private String carrera;
-    public void camb (String scarrera)
+    public void CambioCarrera (String scarrera)
     { carrera=scarrera;
+    }
+    public void CambioMatriculados (int smatriculados)
+    { matriculados=smatriculados;
     }
 
     public void MenuOpc()
@@ -15,6 +19,7 @@ public class P9 {
                 pr.CrearCarreras();
                 break;
             case 2: //Registro de Cantidad de Matriculados por Carrera
+                pr.RegistroMatriculaXCarrera();
                 break;
             case 3: //Total de estudiantes matriculados en una Carrera X
                 break;
@@ -37,11 +42,22 @@ public class P9 {
         for(fi=0;fi<=4;fi++)
         {   System.out.println("Introduzca las carreras");
             scarrera=sn.nextLine();
-            camb(scarrera);
+            CambioCarrera(scarrera);
             Carrera[fi]=scarrera;
-        }
-        
-        
+            sn.close();
+        }      
+    }
+    public void RegistroMatriculaXCarrera()
+    {   int fi;
+        int smatriculados;
+        Scanner sn = new Scanner(System.in);
+        for(fi=0;fi<=4;fi++)
+        {   System.out.printf("Introduzca los Matriculados en la carrera %d: ",fi);
+            smatriculados=sn.nextInt();
+            CambioMatriculados(smatriculados);
+            Matricula[fi]=smatriculados;
+            sn.close();
+        } 
     }
     public void IngresarDatos()
     {   int vnumero, i;
