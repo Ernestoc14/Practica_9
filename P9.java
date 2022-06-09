@@ -1,33 +1,31 @@
 import java.util.Scanner;
 public class P9 {
-    private String [] Carrera = new String [5];
-    private int matriculados;
-    private int [] Matricula = new int [5];
-    private String carrera;
-    public void CambioCarrera (String scarrera)
-    { carrera=scarrera;
-    }
-    public void CambioMatriculados (int smatriculados)
-    { matriculados=smatriculados;
-    }
-
-    public void MenuOpc()
-    {   int opc=0;
+    Scanner sn = new Scanner(System.in);
+    int [] matricula = new int [5];
+    String [] carrera = new String [5];
+    double promlocal=0;
+    public void MenuOpc(int opc)
+    {   //int []vmatricula;
+    //     String []vcarrera;
         P9 pr = new P9();
         switch (opc) {
             case 1: //Crear carrera
-                pr.CrearCarreras();
+                pr.CrearCarreras(carrera);
                 break;
             case 2: //Registro de Cantidad de Matriculados por Carrera
-                pr.RegistroMatriculaXCarrera();
+                pr.RegistroMatriculaXCarrera(matricula, carrera);
                 break;
             case 3: //Total de estudiantes matriculados en una Carrera X
+                pr.TotalMatriculaXCarrera(matricula, carrera);
                 break;
             case 4: //Promedio de estudiantes matriculados
+                promlocal=pr.PromMatricula(matricula, carrera);
                 break;
             case 5: //Carreras por debajo del promedio de estudiantes matriculados
+                pr.CarrerasXDebajoProm(matricula, carrera, promlocal);
                 break;
             case 6: //Carrera con mayor cantidad de Matriculados
+                pr.CarreraWMayorMatricula(matricula, carrera);
                 break;
             case 7: //Salir
                 break;
@@ -35,67 +33,69 @@ public class P9 {
                 break;
         }
     }
-    public void CrearCarreras()
-    {   int fi;
-        String scarrera;
-        Scanner sn = new Scanner(System.in);
-        for(fi=0;fi<=4;fi++)
-        {   System.out.println("Introduzca las carreras");
-            scarrera=sn.nextLine();
-            CambioCarrera(scarrera);
-            Carrera[fi]=scarrera;
-            sn.close();
-        }      
+    public void CrearCarreras(String[] carrera)  //OPCION 1
+    {   //String [] carrera = new String [5]; 
+        for(int fi=0; fi<=carrera.length-1;fi++)
+        {   System.out.printf("Ingrese la carrera %d: ", fi+1);
+            carrera[fi] = sn.nextLine();
+        }   
     }
-    public void RegistroMatriculaXCarrera()
-    {   int fi;
-        int smatriculados;
-        Scanner sn = new Scanner(System.in);
-        for(fi=0;fi<=4;fi++)
-        {   System.out.printf("Introduzca los Matriculados en la carrera %d: ",fi);
-            smatriculados=sn.nextInt();
-            CambioMatriculados(smatriculados);
-            Matricula[fi]=smatriculados;
-            sn.close();
+    public void RegistroMatriculaXCarrera(int[] matricula, String[] carrera) //OPCION 2
+    {   for(int fi=0; fi<=matricula.length-1;fi++)
+        {   System.out.printf("Ingrese la matricula de la carrera %s: ", carrera[fi]);//de %s : ", carrera[fi]); Aqui queria que imprimiera el nombre de la carrrera en lugar del numero 
+            matricula[fi] = sn.nextInt();
         } 
     }
-    public void IngresarDatos()
-    {   int vnumero, i;
-        Scanner sn = new Scanner(System.in);
-        for(i=0;i<=A.length-1;i++)
-        {   System.out.printf("Deme el numero %d: ",i+1);
-            vnumero = sn.nextInt();
-            camb(vnumero);
-            A[i]=num;
-        }
-        System.out.print("Introduzca el Segundo Array\n");
-        for(i=0;i<=B.length-1;i++)
-        {   System.out.printf("Deme el numero %d: ",i+1);
-            vnumero = sn.nextInt();
-            camb(vnumero);
-            B[i]=num;
-        }
-        sn.close();
+    public void TotalMatriculaXCarrera(int matricula[], String carrera[]) //OPCION 3 
+    {   for(int fi=0; fi<=matricula.length-1;fi++)
+        {   System.out.printf("El total de estudiantes de la carrera %s es de: %d\n", carrera[fi], matricula[fi]);
+        } 
     }
-    public void Multiplicando()
-    {   int i=0,j=0;
-        System.out.print("\nEl arreglo multiplicado es: ");
-        for(i=A.length-1, j=0;i>=0;i--,j++)
-        {   C[j]=A[j]*B[i];
-            System.out.printf("%d  ", C[j] );
+    public double PromMatricula(int matricula[], String carrera[]) //OPCION 4
+    {   int suma=0;
+        double prom=0;
+        for(int fi=0; fi<=matricula.length-1;fi++)
+        {   suma = suma+matricula[fi];
+            prom = (suma/5);
+        } 
+        System.out.printf("El promedio de estudiantes matriculados es de: %.2f\n", prom);
+        return prom;
+    }
+    public void CarrerasXDebajoProm(int matricula[], String carrera[], double promlocal) //OPCION 5
+    {   for(int fi=0; fi<=matricula.length-1;fi++)
+        {   if(matricula[fi] < promlocal)
+            {   System.out.printf("La carrera de %s esta por debajo del promedio %.2f con %d estudiantes matriculados.\n" ,carrera[fi] ,promlocal ,matricula[fi]);
+            }
+        } 
+    }
+    public void CarreraWMayorMatricula(int matricula[], String carrera[]) //OPCION 6
+    {   int pos=0, mayor = matricula[0];
+        for(int fi=0;fi<matricula.length;fi++)
+        {   if(matricula[fi]>mayor)
+            {   mayor = matricula[fi];
+                pos=fi;
+            }
         }
+        System.out.printf("La carrera con el mayor numero de matricula es %s con %d estudiantes matriculados.\n" , carrera[pos] ,matricula[pos]);
     }
     public static void main(String[] args) {
         Scanner sn = new Scanner(System.in);
         P9 pr = new P9();
-        int y=1;
-        do{ 
-            pr.MenuOpc();
-            System.out.println("Desea realizar otra opcion? 1-Si 2-No  ");
+        int y=0,opc=0;
+        do{ System.out.println("--------------------------------Menu-----------------------------------------------");
+            System.out.println("1.Crear Carreras ");
+            System.out.println("2.Registro de matricula por carrera ");
+            System.out.println("3.Total de estudiantes matriculados por carrera ");
+            System.out.println("4.Promedio de los estudiantes matriculados ");
+            System.out.println("5.Carreras por debajo del promedio de estudiantes matriculados ");
+            System.out.println("6.Carrera con mayor cantidad de estudiantes matriculados ");
+            System.out.println("7.Salir ");
+            System.out.print("Introduzca la opcion a realizar:");
+            opc = sn.nextInt();
+            pr.MenuOpc(opc);
+            System.out.print("Desea realizar otra opcion? 1-Si 2-No: ");
             y = sn.nextInt();
         }while(y==1);
         sn.close();
-        pr.IngresarDatos();
-        pr.Multiplicando();
     }
 }
